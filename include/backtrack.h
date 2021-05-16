@@ -11,12 +11,22 @@
 #include "graph.h"
 
 class Backtrack {
- public:
-  Backtrack();
-  ~Backtrack();
+public:
+    Backtrack();
 
-  void PrintAllMatches(const Graph &data, const Graph &query,
-                       const CandidateSet &cs);
+    ~Backtrack();
+
+    void PrintAllMatches(const Graph &data, const Graph &query,
+                         const CandidateSet &cs);
+
+private:
+    void NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
+                    int index, int size, std::vector<int> &acc);
+
+    void PrintCandidates(std::vector<int> &ans);
+
+    bool CheckNeighbors(const Graph &data, const Graph &query, const CandidateSet &cs,
+                        int index, int csIndex);
 };
 
 #endif  // BACKTRACK_H_
