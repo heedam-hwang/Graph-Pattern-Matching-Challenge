@@ -27,6 +27,8 @@ private:
 
     bool CheckNeighbors(const Graph &data, const Graph &query, const CandidateSet &cs,
                         int index, int csIndex);
+
+    void checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query);
 };
 
 #endif  // BACKTRACK_H_

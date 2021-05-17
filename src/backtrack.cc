@@ -70,6 +70,8 @@ void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
                            int index, int size, std::vector<int> &acc) {
   if (index == size) {
     PrintCandidates(acc);
+    /* 제출 시 checkAnswer는 comment out */
+    checkAnswer(acc, data, query);
     return;
   } else {
     int csNum = cs.GetCandidateSize(index);
@@ -89,5 +91,20 @@ void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
       }
     }
     return;
+  }
+}
+
+void Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query){
+  for (int i = 0; i < query.GetNumVertices(); i++) {
+    /* 먼저 vertext label이 같은지 체크 */
+    if(query.GetLabel(i) != data.GetLabel(acc[i])) {
+      std::cout << "========== " << i << "th vertex label does not match! ========== " << std::endl;
+    }
+    /* data graph와 query graph 사이의 edge 관계가 같은지 체크: query graph에 edge가 있다면 data graph에도 edge가 있어야*/
+    for(int j = i + 1; j < query.GetNumVertices(); j++){
+      if(query.IsNeighbor(i, j) && !data.IsNeighbor(acc[i], acc[j])){
+        std::cout << "========== " << acc[i] << " and " << acc[j] << " does not have edge on data graph ========== "<< std::endl;
+      }
+    }
   }
 }
