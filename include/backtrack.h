@@ -20,6 +20,8 @@ public:
                          const CandidateSet &cs);
 
 private:
+    static int count;
+    static int count_error;
     void NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
                     int index, int size, std::vector<int> &acc);
 
@@ -28,7 +30,7 @@ private:
     bool CheckNeighbors(const Graph &data, const Graph &query, const CandidateSet &cs,
                         int index, int csIndex);
 
-    void checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query);
+    bool checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query);
 };
 
 #endif  // BACKTRACK_H_

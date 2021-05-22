@@ -10,8 +10,12 @@ Backtrack::Backtrack() {}
 
 Backtrack::~Backtrack() {}
 
+int Backtrack::count;
+int Backtrack::count_error;
+
 void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
                                 const CandidateSet &cs) {
+  Backtrack::count = Backtrack::count_error = 0;
   int num = query.GetNumVertices();
   std::vector<int> ans(num, -1);
   std::cout << "t " << num << "\n";
@@ -20,6 +24,7 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
   std::chrono::duration<double> time = end - start;
   std::cout << "Elapsed Time: " << time.count() << "s\n";
+  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -71,9 +76,13 @@ bool Backtrack::CheckNeighbors(const Graph &data, const Graph &query, const Cand
 void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
                            int index, int size, std::vector<int> &acc) {
   if (index == size) {
-    PrintCandidates(acc);
+    // 극단적인 수단: checkAnswer해서 맞는 거만 출력
     /* 제출 시 checkAnswer는 comment out */
-//    checkAnswer(acc, data, query);
+    PrintCandidates(acc);
+    Backtrack::count++;
+    if (!checkAnswer(acc, data, query)) {
+      Backtrack::count_error++;
+    }
     return;
   } else {
     int csNum = cs.GetCandidateSize(index);
@@ -96,18 +105,25 @@ void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
   }
 }
 
-void Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query) {
+bool Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query) {
+  bool ans = true;
   for (int i = 0; i < query.GetNumVertices(); i++) {
-    /* 먼저 vertext label이 같은지 체크 */
+    /* 먼저 vertex label이 같은지 체크 */
     if (query.GetLabel(i) != data.GetLabel(acc[i])) {
       std::cout << "========== " << i << "th vertex label does not match! ========== " << std::endl;
+      ans = false;
+      return ans;
     }
     /* data graph와 query graph 사이의 edge 관계가 같은지 체크: query graph에 edge가 있다면 data graph에도 edge가 있어야*/
     for (int j = i + 1; j < query.GetNumVertices(); j++) {
       if (query.IsNeighbor(i, j) && !data.IsNeighbor(acc[i], acc[j])) {
-        std::cout << "========== " << acc[i] << " and " << acc[j] << " does not have edge on data graph ========== "
+        std::cout << "========== " << acc[i] << " and " << acc[j]
+                  << " does not have edge on data graph ========== "
                   << std::endl;
+        ans = false;
+        return ans;
       }
     }
   }
+  return ans;
 }
