@@ -22,6 +22,7 @@ public:
 private:
     static int count;
     static int count_error;
+
     void NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
                     int index, int size, std::vector<int> &acc);
 
@@ -31,6 +32,13 @@ private:
                         int index, int csIndex);
 
     bool checkAnswer(std::vector<int> &acc, const Graph &data, const Graph &query);
+
+    bool CheckNeighborsWithDP(const Graph &data, const Graph &query, const CandidateSet &cs,
+                              int index, int csIndex, std::vector<std::vector<Vertex>> &cs_dp,
+                              std::vector<std::vector<Vertex>> &cs_dp_next);
+
+    void CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs,
+                     int index, int size, std::vector<int> &acc, std::vector<std::vector<Vertex>> &cs_dp);
 };
 
 #endif  // BACKTRACK_H_

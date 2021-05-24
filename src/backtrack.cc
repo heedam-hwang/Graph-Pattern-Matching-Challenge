@@ -20,11 +20,22 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   std::vector<int> ans(num, -1);
   std::cout << "t " << num << "\n";
   std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-  NaiveCheck(data, query, cs, 0, num, ans);
+  std::vector<Vertex> _a;
+  std::vector<std::vector<Vertex>> __a(num, _a);
+  CheckWithDP(data, query, cs, 0, num, ans, __a);
+//  NaiveCheck(data, query, cs, 0, num, ans);
   std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
   std::chrono::duration<double> time = end - start;
   std::cout << "Elapsed Time: " << time.count() << "s\n";
   std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+
+  Backtrack::count = Backtrack::count_error = 0;
+  start = std::chrono::system_clock::now();
+  NaiveCheck(data, query, cs, 0, num , ans);
+  end = std::chrono::system_clock::now();
+  time = end - start;
+  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
+  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -126,4 +137,84 @@ bool Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Grap
     }
   }
   return ans;
+}
+
+bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index,
+                                     int csIndex, std::vector<std::vector<Vertex>> &cs_dp,
+                                     std::vector<std::vector<Vertex>> &cs_dp_next) {
+  bool ans = true;
+  bool temp = false;
+  int queryNbhStart = query.GetNeighborStartOffset(index);
+  int queryNbhEnd = query.GetNeighborEndOffset(index);
+  if (cs_dp_next.empty())
+  {
+    std::vector<Vertex> _a;
+    for (int _i = 0; _i < query.GetNumVertices(); ++_i) {
+      cs_dp_next.push_back(_a);
+    }
+    for (int _i = queryNbhStart; _i < queryNbhEnd; ++_i) {
+      temp = false;
+      int ithNbh = query.GetNeighbor(_i);
+      int queryNbhCsSize = cs.GetCandidateSize(ithNbh);
+      for (int _j = 0; _j < queryNbhCsSize; ++_j) {
+        if (data.IsNeighbor(cs.GetCandidate(index, csIndex), cs.GetCandidate(ithNbh, _j))) {
+          temp = true;
+          cs_dp_next[ithNbh].push_back(cs.GetCandidate(ithNbh, _j));
+        }
+      }
+      if (!temp)
+        ans = false;
+      else {
+        cs_dp_next[csIndex].push_back(_i);
+      }
+    }
+  } else {
+    for (int _i = 0; _i < queryNbhEnd - queryNbhStart; ++_i) {
+      temp = false;
+      int ithNbh = query.GetNeighbor(_i + queryNbhStart);
+      int queryNbhCsSize = cs_dp_next[ithNbh].size();
+      for (int _j = 0; _j < queryNbhCsSize; ++_j)
+      {
+        if (data.IsNeighbor(cs.GetCandidate(index, csIndex), cs_dp_next[ithNbh][_j])) {
+          temp = true;
+          break;
+        }
+      }
+      if (!temp)
+        return false;
+    }
+  }
+  if (cs_dp[csIndex].empty())
+  {
+    cs_dp.assign(cs_dp_next.begin(), cs_dp_next.end());
+  }
+  return ans;
+}
+
+// cs_dp: candidate set의 멤버 중 가능한 것들(CheckNeighborWithDP에서 확인된 것들)
+// CheckNeighborWithDP: check Neighbors and fill cs_dp_next
+void Backtrack::CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index, int size,
+                            std::vector<int> &acc, std::vector<std::vector<Vertex>> &cs_dp) {
+  if (index == size) {
+    PrintCandidates(acc);
+    Backtrack::count++;
+    if (!checkAnswer(acc, data, query)) {
+      Backtrack::count_error++;
+    }
+    return;
+  } else {
+    int csNum = (cs_dp[index].empty()) ? cs.GetCandidateSize(index): cs_dp[index].size();
+    std::vector<std::vector<Vertex>> cs_dp_next;
+    bool isEmpty = cs_dp[index].empty();
+    for (int _i = 0; _i < csNum; ++_i) {
+      int ithCandidate = isEmpty ? cs.GetCandidate(index, _i) : cs_dp[index][_i];
+      if (std::find(acc.begin(), acc.end(), ithCandidate) == acc.end() &&
+          CheckNeighborsWithDP(data, query, cs, index, _i,cs_dp, cs_dp_next)) {
+        acc[index] = ithCandidate;
+        CheckWithDP(data, query, cs, index + 1, size, acc, cs_dp_next);
+        acc[index] = -1;
+      }
+    }
+    return;
+  }
 }
