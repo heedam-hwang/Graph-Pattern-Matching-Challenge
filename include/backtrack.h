@@ -39,6 +39,7 @@ private:
 
     void CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs,
                      int index, int size, std::vector<int> &acc, std::vector<std::vector<Vertex>> &cs_dp);
+
 };
 
 #endif  // BACKTRACK_H_
