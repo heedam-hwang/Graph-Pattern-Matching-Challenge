@@ -7,7 +7,7 @@
 
 DAG::DAG(const Graph &query, const Graph &data) {
   int n = query.GetNumVertices();
-  std::vector<Vertex> temp (n, 0);
+  std::vector<Vertex> temp(n, 0);
   dag.resize(n, temp);
   size = n;
   edge = 0;
@@ -46,10 +46,10 @@ int DAG::findRoot(const Graph &query, const Graph &data) {
 
 void DAG::BFS(const Graph &query, const Graph &data) {
   std::queue<Vertex> q;
-  std::vector<Vertex> bfs_order;
   Vertex r = findRoot(query, data);
   q.push(r);
   bfs_order.push_back(r);
+  root = r;
 
   while (!q.empty()) {
     Vertex v = q.front();
@@ -60,8 +60,7 @@ void DAG::BFS(const Graph &query, const Graph &data) {
       int n = query.GetNeighbor(i);
 
       // check that the node is marked
-      if (std::find(bfs_order.begin(), bfs_order.end(), n) == bfs_order.end())
-      {
+      if (std::find(bfs_order.begin(), bfs_order.end(), n) == bfs_order.end()) {
         bfs_order.push_back(n);
         q.push(n);
       }
@@ -71,10 +70,8 @@ void DAG::BFS(const Graph &query, const Graph &data) {
 
   int n = bfs_order.size();
   for (int i = 0; i < n; ++i) {
-    for (int j = i + 1; j < n; ++j)
-    {
-      if (query.IsNeighbor(bfs_order[i], bfs_order[j]))
-      {
+    for (int j = i + 1; j < n; ++j) {
+      if (query.IsNeighbor(bfs_order[i], bfs_order[j])) {
         dag[bfs_order[i]][bfs_order[j]] = 1;
         edge++;
       }
@@ -84,13 +81,22 @@ void DAG::BFS(const Graph &query, const Graph &data) {
 }
 
 void DAG::PrintDAG() {
+//  int count = 0;
   for (int i = 0; i < size; ++i)
-    for (int j = 0; j < size; ++j)
-    {
-      if (dag[i][j] == 1)
-      {
+    for (int j = 0; j < size; ++j) {
+      if (dag[i][j] == 1) {
         std::cout << "Edge from " << i << " to " << j << "\n";
-        count++;
+//        count++;
       }
     }
+/*
+  DAG 잘만들었는지 체크용
+  if (count != edge)
+    std::cout << "DAG ERROR\n";
+  std::cout << "Number of edges: " << edge << "\n";
+*/
+}
+
+Vertex DAG::getRoot() {
+  return root;
 }

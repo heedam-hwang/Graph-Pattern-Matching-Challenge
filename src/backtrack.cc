@@ -32,6 +32,7 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
 */
 
   DAG dag(query, data);
+//  std::cout << "Edge number: " << query.GetNumEdges();
 
 /*
   Backtrack::count = Backtrack::count_error = 0;
