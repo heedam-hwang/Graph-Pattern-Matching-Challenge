@@ -4,6 +4,7 @@
  */
 
 #include "backtrack.h"
+#include "dag.h"
 #include <chrono>
 
 Backtrack::Backtrack() {}
@@ -19,23 +20,28 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   int num = query.GetNumVertices();
   std::vector<int> ans(num, -1);
   std::cout << "t " << num << "\n";
+/*
   std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
   std::vector<Vertex> _a;
   std::vector<std::vector<Vertex>> __a(num, _a);
   CheckWithDP(data, query, cs, 0, num, ans, __a);
-//  NaiveCheck(data, query, cs, 0, num, ans);
   std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
   std::chrono::duration<double> time = end - start;
   std::cout << "Elapsed Time: " << time.count() << "s\n";
   std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+*/
 
+  DAG dag(query, data);
+
+/*
   Backtrack::count = Backtrack::count_error = 0;
-  start = std::chrono::system_clock::now();
+  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
   NaiveCheck(data, query, cs, 0, num , ans);
-  end = std::chrono::system_clock::now();
-  time = end - start;
+  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+  std::chrono::duration<double> time = end - start;
   std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
   std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+*/
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -139,6 +145,7 @@ bool Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Grap
   return ans;
 }
 
+/*
 bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index,
                                      int csIndex, std::vector<std::vector<Vertex>> &cs_dp,
                                      std::vector<std::vector<Vertex>> &cs_dp_next) {
@@ -217,4 +224,4 @@ void Backtrack::CheckWithDP(const Graph &data, const Graph &query, const Candida
     }
     return;
   }
-}
+}*/
