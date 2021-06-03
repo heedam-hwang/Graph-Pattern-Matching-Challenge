@@ -9,6 +9,7 @@ DAG::DAG(const Graph &query, const Graph &data) {
   int n = query.GetNumVertices();
   std::vector<Vertex> temp(n, 0);
   dag.resize(n, temp);
+  parents.resize(n, 0);
   size = n;
   edge = 0;
   BFS(query, data);
@@ -71,8 +72,10 @@ void DAG::BFS(const Graph &query, const Graph &data) {
   int n = bfs_order.size();
   for (int i = 0; i < n; ++i) {
     for (int j = i + 1; j < n; ++j) {
+      // from bfs_order[i] to bfs_order[j]
       if (query.IsNeighbor(bfs_order[i], bfs_order[j])) {
         dag[bfs_order[i]][bfs_order[j]] = 1;
+        parents[bfs_order[j]]++;
         edge++;
       }
     }
@@ -99,4 +102,56 @@ void DAG::PrintDAG() {
 
 Vertex DAG::getRoot() {
   return root;
+}
+
+void DAG::InitWeight(const CandidateSet &cs, const Graph& data) {
+  std::vector<std::vector<int>> w(size);
+
+  for (int u = 0; u < size; ++u)
+  {
+    std::vector<Vertex> childs;
+    int n = cs.GetCandidateSize(u);
+    w[u].resize(n, 0);
+    int k = dag[u].size();
+
+    for (int j = 0; j < k; ++j)
+    {
+      if (dag[u][j] == 1)
+        childs.push_back(j);
+    }
+
+    if (childs.empty())
+      std::find(childs.begin(), childs.end(), 1);
+    // w[u][j] <- W_{u}(v)
+    else
+    {
+      k = childs.size();
+      // c_i = childs[i]
+      // 각 v(=j) 마다
+      int min = INT_MAX;
+      for (int v = 0; v < n; ++v)
+      {
+        int temp;
+        for (int i = 0; i < k; ++i)
+        {
+          temp = 0;
+          int csSize = cs.GetCandidateSize(childs[i]);
+
+          // W_{u, c_i} (v) 계산
+          for (int vn = 0; vn < csSize; ++vn)
+          {
+            if (data.IsNeighbor(cs.GetCandidate(childs[i], vn), cs.GetCandidate(u, v)))
+            {
+              temp += w[childs[i]][cs.GetCandidate(childs[i], vn)];
+            }
+          }
+          if (min > temp)
+            min = temp;
+        }
+        w[u][v] = min;
+      }
+    }
+
+  }
+
 }

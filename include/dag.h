@@ -8,6 +8,7 @@
 #include <queue>
 #include "graph.h"
 #include "common.h"
+#include "candidate_set.h"
 #include <limits>
 
 class DAG {
@@ -22,21 +23,22 @@ public:
 
     void PrintDAG();
 
+    void InitWeight(const CandidateSet& cs, const Graph& data);
+
 
 private:
     void BFS(const Graph &query, const Graph &data);
 
-    void Weight();
 
     int findRoot(const Graph &query, const Graph &data);
 
     int size;
     int edge;
     Vertex root;
-
+// Weight array를 만들기 위해 parent 수 미리 기록
     std::vector<std::vector<Vertex>> dag;
+    std::vector<int> parents;
     std::vector<Vertex> bfs_order;
-    std::vector<int> weight;
 };
 
 #endif //SUBGRAPH_MATCHING_DAG_H
