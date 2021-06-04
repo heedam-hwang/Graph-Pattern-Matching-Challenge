@@ -1,4 +1,3 @@
-#!/usr/bin/zsh
 
 timeout 1m ./build/main/program ./data/lcc_hprd.igraph ./query/lcc_hprd_n1.igraph ./candidate_set/lcc_hprd_n1.cs
 timeout 1m ./build/main/program ./data/lcc_hprd.igraph ./query/lcc_hprd_n3.igraph ./candidate_set/lcc_hprd_n3.cs
