@@ -7,6 +7,8 @@
 #include "dag.h"
 #include <chrono>
 
+#define MAX_SIZE 100000
+
 Backtrack::Backtrack() {}
 
 Backtrack::~Backtrack() {}
@@ -17,30 +19,29 @@ int Backtrack::count_error;
 void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
                                 const CandidateSet &cs) {
   Backtrack::count = Backtrack::count_error = 0;
-//  int num = query.GetNumVertices();
-//  std::vector<int> ans(num, -1);
-//  std::cout << "t " << num << "\n";
-//  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-//  std::vector<Vertex> _a;
-//  std::vector<std::vector<Vertex>> __a(num, _a);
-//  CheckWithDP(data, query, cs, 0, num, ans, __a);
-//  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-//  std::chrono::duration<double> time = end - start;
-//  std::cout << "Elapsed Time: " << time.count() << "s\n";
-//  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
-
+  int num = query.GetNumVertices();
+  std::vector<int> ans(num, -1);
+  std::cout << "t " << num << "\n";
+  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
   DAG dag(query, data);
-  dag.PrintDAG();
   dag.InitWeight(cs, data);
-  dag.PrintWeight();
+  std::vector<Vertex> _a;
+  std::vector<std::vector<Vertex>> __a(num, _a);
+  AdaptiveMatching(data, query, cs, 0, num, ans, dag);
+//  CheckWithDP(data, query, cs, 0, num, ans, __a);
+  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+  std::chrono::duration<double> time = end - start;
+  std::cout << "Elapsed Time: " << time.count() << "s\n";
+  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 
-//  Backtrack::count = Backtrack::count_error = 0;
-//  start = std::chrono::system_clock::now();
-//  NaiveCheck(data, query, cs, 0, num , ans);
-//  end = std::chrono::system_clock::now();
-//  time = end - start;
-//  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
-//  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+
+  Backtrack::count = Backtrack::count_error = 0;
+  start = std::chrono::system_clock::now();
+  NaiveCheck(data, query, cs, 0, num , ans);
+  end = std::chrono::system_clock::now();
+  time = end - start;
+  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
+  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -49,6 +50,56 @@ void Backtrack::PrintCandidates(std::vector<int> &ans) {
     std::cout << " " << i;
   }
   std::cout << "\n";
+}
+
+bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const CandidateSet &cs, int index, int size,
+                                 std::vector<int> &acc, const DAG &dag) {
+  if (index == size) {
+    PrintCandidates(acc);
+    Backtrack::count++;
+    if (!checkAnswer(acc, data, query)) {
+      Backtrack::count_error++;
+    }
+    if (count == MAX_SIZE)
+      return true;
+
+    return false;
+  } else if (index == 0) {
+    int root = dag.getRoot();
+    int csNum = cs.GetCandidateSize(root);
+    for (int _i = 0; _i < csNum; ++_i)
+    {
+      int ithCandidate = cs.GetCandidate(root, _i);
+      acc[root] = ithCandidate;
+      AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
+      acc[root] = -1;
+    }
+  }
+  else {
+    int nextV = dag.nextV(acc);
+    if (nextV == -1) {
+      return false;
+    }
+    std::vector<Vertex> extendable = dag.extendable(acc, nextV, cs, data);
+    for (Vertex v: extendable)
+    {
+      if (std::find(acc.begin(), acc.end(), v) != acc.end()) {
+        continue;
+      }
+
+      if (v == -1)
+      {
+        std::cout << "ERROR\n";
+      }
+
+      acc[nextV] = v;
+      bool isEnd = AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
+      acc[nextV] = -1;
+      if (isEnd)
+        return true;
+    }
+  }
+  return false;
 }
 
 bool Backtrack::CheckNeighbors(const Graph &data, const Graph &query, const CandidateSet &cs, int index, int csIndex) {
@@ -156,8 +207,7 @@ bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, cons
   bool temp = false;
   int queryNbhStart = query.GetNeighborStartOffset(index);
   int queryNbhEnd = query.GetNeighborEndOffset(index);
-  if (cs_dp_next.empty())
-  {
+  if (cs_dp_next.empty()) {
     std::vector<Vertex> _a;
     for (int _i = 0; _i < query.GetNumVertices(); ++_i) {
       cs_dp_next.push_back(_a);
@@ -183,8 +233,7 @@ bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, cons
       temp = false;
       int ithNbh = query.GetNeighbor(_i + queryNbhStart);
       int queryNbhCsSize = cs_dp_next[ithNbh].size();
-      for (int _j = 0; _j < queryNbhCsSize; ++_j)
-      {
+      for (int _j = 0; _j < queryNbhCsSize; ++_j) {
         if (data.IsNeighbor(cs.GetCandidate(index, csIndex), cs_dp_next[ithNbh][_j])) {
           temp = true;
           break;
@@ -194,8 +243,7 @@ bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, cons
         return false;
     }
   }
-  if (cs_dp[csIndex].empty())
-  {
+  if (cs_dp[csIndex].empty()) {
     cs_dp.assign(cs_dp_next.begin(), cs_dp_next.end());
   }
   return ans;
@@ -215,13 +263,13 @@ bool Backtrack::CheckWithDP(const Graph &data, const Graph &query, const Candida
       return true;
     return false;
   } else {
-    int csNum = (cs_dp[index].empty()) ? cs.GetCandidateSize(index): cs_dp[index].size();
+    int csNum = (cs_dp[index].empty()) ? cs.GetCandidateSize(index) : cs_dp[index].size();
     std::vector<std::vector<Vertex>> cs_dp_next;
     bool isEmpty = cs_dp[index].empty();
     for (int _i = 0; _i < csNum; ++_i) {
       int ithCandidate = isEmpty ? cs.GetCandidate(index, _i) : cs_dp[index][_i];
       if (std::find(acc.begin(), acc.end(), ithCandidate) == acc.end() &&
-          CheckNeighborsWithDP(data, query, cs, index, _i,cs_dp, cs_dp_next)) {
+          CheckNeighborsWithDP(data, query, cs, index, _i, cs_dp, cs_dp_next)) {
         acc[index] = ithCandidate;
         bool isEnd = CheckWithDP(data, query, cs, index + 1, size, acc, cs_dp_next);
         acc[index] = -1;

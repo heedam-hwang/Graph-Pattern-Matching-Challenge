@@ -73,11 +73,13 @@ void DAG::BFS(const Graph &query, const Graph &data) {
   }
 
   int n = bfs_order.size();
+  parent_list.resize(n);
   for (int i = 0; i < n; ++i) {
     for (int j = i + 1; j < n; ++j) {
       // from bfs_order[i] to bfs_order[j]
       if (query.IsNeighbor(bfs_order[i], bfs_order[j])) {
         dag[bfs_order[i]][bfs_order[j]] = 1;
+        parent_list[bfs_order[j]].push_back(bfs_order[i]);
         parents[bfs_order[j]]++;
         edge++;
       }
@@ -107,7 +109,7 @@ void DAG::PrintDAG() {
 */
 }
 
-Vertex DAG::getRoot() {
+Vertex DAG::getRoot() const {
   return root;
 }
 
@@ -185,7 +187,64 @@ void DAG::PrintWeight() {
   }
 }
 
-Vertex DAG::next(std::vector<Vertex> &acc)
-{
+Vertex DAG::nextV(std::vector<Vertex> &acc) const {
+  // acc: matched list
+  int min = INT_MAX;
+  Vertex minIdx = -1;
+  for (int i = 0; i < size; ++i) {
+    if (acc[i] != -1)
+      continue;
+    bool allmatched = true;
+    for (Vertex v: parent_list[i]) {
+      if (acc[v] == -1) {
+        allmatched = false;
+        break;
+      }
+    }
+/*
+    for (int j = 0; j < size; ++j) {
+      if (dag[i][j] == -1) {
+        if (std::find(acc.begin(), acc.end(), j) == acc.end()) {
+          allmatched = false;
+          break;
+        }
+      }
+    }
+*/
+    if (allmatched)
+      if (min > weight[i]) {
+        min = weight[i];
+        minIdx = i;
+      }
+  }
+  return minIdx;
+}
 
+std::vector<Vertex>
+DAG::extendable(const std::vector<Vertex> &acc, Vertex u, const CandidateSet &cs, const Graph &data) const {
+  // M(p_i) 에 adjacent, v in C(u)
+  std::vector<Vertex> ans;
+
+  int num = cs.GetCandidateSize(u);
+
+  for (int i = 0; i < num; ++i) {
+    Vertex v = cs.GetCandidate(u, i);
+    bool extendable = true;
+
+    for (Vertex k: parent_list[u]) {
+      if (acc[k] == -1) {
+        extendable = false;
+        break;
+      } else if (!data.IsNeighbor(acc[k], v)) {
+        extendable = false;
+        break;
+      } else {
+        continue;
+      }
+    }
+    if (extendable)
+      ans.push_back(v);
+  }
+
+  return ans;
 }

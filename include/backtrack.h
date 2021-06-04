@@ -9,6 +9,7 @@
 #include "candidate_set.h"
 #include "common.h"
 #include "graph.h"
+#include "dag.h"
 
 class Backtrack {
 public:
@@ -39,6 +40,9 @@ private:
 
     bool CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs,
                      int index, int size, std::vector<int> &acc, std::vector<std::vector<Vertex>> &cs_dp);
+
+    bool AdaptiveMatching(const Graph &data, const Graph &query, const CandidateSet &cs,
+                         int index, int size, std::vector<int> &acc, const DAG &dag);
 
 };
 

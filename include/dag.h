@@ -21,15 +21,17 @@ public:
 
     int getSize();
 
-    Vertex getRoot();
+    Vertex getRoot() const;
 
     void PrintDAG();
 
     void PrintWeight();
 
-    void InitWeight(const CandidateSet& cs, const Graph& data);
+    void InitWeight(const CandidateSet &cs, const Graph &data);
 
-    Vertex next(std::vector<Vertex> &acc);
+    Vertex nextV(std::vector<Vertex> &acc) const;
+
+    std::vector<Vertex> extendable(const std::vector<Vertex> &acc, Vertex u, const CandidateSet &cs, const Graph &data) const;
 
 
 private:
@@ -46,6 +48,7 @@ private:
     std::vector<int> parents;
     std::vector<Vertex> bfs_order;
     std::vector<std::vector<int>> w;
+    std::vector<std::vector<int>> parent_list;
     std::vector<int> weight;
 };
 
