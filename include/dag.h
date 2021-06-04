@@ -10,6 +10,8 @@
 #include "common.h"
 #include "candidate_set.h"
 #include <limits>
+#include <utility>
+
 
 class DAG {
 public:
@@ -23,7 +25,11 @@ public:
 
     void PrintDAG();
 
+    void PrintWeight();
+
     void InitWeight(const CandidateSet& cs, const Graph& data);
+
+    Vertex next(std::vector<Vertex> &acc);
 
 
 private:
@@ -39,6 +45,8 @@ private:
     std::vector<std::vector<Vertex>> dag;
     std::vector<int> parents;
     std::vector<Vertex> bfs_order;
+    std::vector<std::vector<int>> w;
+    std::vector<int> weight;
 };
 
 #endif //SUBGRAPH_MATCHING_DAG_H

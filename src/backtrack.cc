@@ -17,32 +17,30 @@ int Backtrack::count_error;
 void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
                                 const CandidateSet &cs) {
   Backtrack::count = Backtrack::count_error = 0;
-  int num = query.GetNumVertices();
-  std::vector<int> ans(num, -1);
-  std::cout << "t " << num << "\n";
-/*
-  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-  std::vector<Vertex> _a;
-  std::vector<std::vector<Vertex>> __a(num, _a);
-  CheckWithDP(data, query, cs, 0, num, ans, __a);
-  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-  std::chrono::duration<double> time = end - start;
-  std::cout << "Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
-*/
+//  int num = query.GetNumVertices();
+//  std::vector<int> ans(num, -1);
+//  std::cout << "t " << num << "\n";
+//  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+//  std::vector<Vertex> _a;
+//  std::vector<std::vector<Vertex>> __a(num, _a);
+//  CheckWithDP(data, query, cs, 0, num, ans, __a);
+//  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+//  std::chrono::duration<double> time = end - start;
+//  std::cout << "Elapsed Time: " << time.count() << "s\n";
+//  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 
   DAG dag(query, data);
-//  std::cout << "Edge number: " << query.GetNumEdges();
+  dag.PrintDAG();
+  dag.InitWeight(cs, data);
+  dag.PrintWeight();
 
-/*
-  Backtrack::count = Backtrack::count_error = 0;
-  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-  NaiveCheck(data, query, cs, 0, num , ans);
-  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-  std::chrono::duration<double> time = end - start;
-  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
-*/
+//  Backtrack::count = Backtrack::count_error = 0;
+//  start = std::chrono::system_clock::now();
+//  NaiveCheck(data, query, cs, 0, num , ans);
+//  end = std::chrono::system_clock::now();
+//  time = end - start;
+//  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
+//  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -91,7 +89,7 @@ bool Backtrack::CheckNeighbors(const Graph &data, const Graph &query, const Cand
 }
 
 // Graph에 label frequency를 구할 수 있는 함수가 있음, 이걸로 좀 더 효율적인 검색을 할 수 있을듯?
-void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
+bool Backtrack::NaiveCheck(const Graph &data, const Graph &query, const CandidateSet &cs,
                            int index, int size, std::vector<int> &acc) {
   if (index == size) {
     // 극단적인 수단: checkAnswer해서 맞는 거만 출력
@@ -101,7 +99,10 @@ void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
     if (!checkAnswer(acc, data, query)) {
       Backtrack::count_error++;
     }
-    return;
+    if (count == 100000)
+      return true;
+
+    return false;
   } else {
     int csNum = cs.GetCandidateSize(index);
     for (int _i = 0; _i < csNum; ++_i) {
@@ -115,11 +116,13 @@ void Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
       if (std::find(acc.begin(), acc.end(), ithCandidate) == acc.end() &&
           CheckNeighbors(data, query, cs, index, ithCandidate)) {
         acc[index] = ithCandidate;
-        NaiveCheck(data, query, cs, index + 1, size, acc);
+        bool isEnd = NaiveCheck(data, query, cs, index + 1, size, acc);
         acc[index] = -1;
+        if (isEnd)
+          return true;
       }
     }
-    return;
+    return false;
   }
 }
 
@@ -146,7 +149,6 @@ bool Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Grap
   return ans;
 }
 
-/*
 bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index,
                                      int csIndex, std::vector<std::vector<Vertex>> &cs_dp,
                                      std::vector<std::vector<Vertex>> &cs_dp_next) {
@@ -201,7 +203,7 @@ bool Backtrack::CheckNeighborsWithDP(const Graph &data, const Graph &query, cons
 
 // cs_dp: candidate set의 멤버 중 가능한 것들(CheckNeighborWithDP에서 확인된 것들)
 // CheckNeighborWithDP: check Neighbors and fill cs_dp_next
-void Backtrack::CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index, int size,
+bool Backtrack::CheckWithDP(const Graph &data, const Graph &query, const CandidateSet &cs, int index, int size,
                             std::vector<int> &acc, std::vector<std::vector<Vertex>> &cs_dp) {
   if (index == size) {
     PrintCandidates(acc);
@@ -209,7 +211,9 @@ void Backtrack::CheckWithDP(const Graph &data, const Graph &query, const Candida
     if (!checkAnswer(acc, data, query)) {
       Backtrack::count_error++;
     }
-    return;
+    if (count == 100000)
+      return true;
+    return false;
   } else {
     int csNum = (cs_dp[index].empty()) ? cs.GetCandidateSize(index): cs_dp[index].size();
     std::vector<std::vector<Vertex>> cs_dp_next;
@@ -219,10 +223,12 @@ void Backtrack::CheckWithDP(const Graph &data, const Graph &query, const Candida
       if (std::find(acc.begin(), acc.end(), ithCandidate) == acc.end() &&
           CheckNeighborsWithDP(data, query, cs, index, _i,cs_dp, cs_dp_next)) {
         acc[index] = ithCandidate;
-        CheckWithDP(data, query, cs, index + 1, size, acc, cs_dp_next);
+        bool isEnd = CheckWithDP(data, query, cs, index + 1, size, acc, cs_dp_next);
         acc[index] = -1;
+        if (isEnd)
+          return true;
       }
     }
-    return;
+    return false;
   }
-}*/
+}

@@ -5,6 +5,9 @@
 #include "dag.h"
 #include <iostream>
 
+template<typename T>
+using riter = typename std::vector<T>::reverse_iterator;
+
 DAG::DAG(const Graph &query, const Graph &data) {
   int n = query.GetNumVertices();
   std::vector<Vertex> temp(n, 0);
@@ -92,6 +95,10 @@ void DAG::PrintDAG() {
 //        count++;
       }
     }
+  std::cout << "BFS ORDER\n";
+  for (Vertex v: bfs_order)
+    std::cout << v << " ";
+  std::cout << "\n";
 /*
   DAG 잘만들었는지 체크용
   if (count != edge)
@@ -104,54 +111,81 @@ Vertex DAG::getRoot() {
   return root;
 }
 
-void DAG::InitWeight(const CandidateSet &cs, const Graph& data) {
-  std::vector<std::vector<int>> w(size);
+void DAG::InitWeight(const CandidateSet &cs, const Graph &data) {
+  w.resize(size);
 
-  for (int u = 0; u < size; ++u)
-  {
+  for (riter<Vertex> iter = bfs_order.rbegin(); iter != bfs_order.rend(); ++iter) {
+    Vertex u = *iter;
+    int s = cs.GetCandidateSize(u);
     std::vector<Vertex> childs;
-    int n = cs.GetCandidateSize(u);
-    w[u].resize(n, 0);
-    int k = dag[u].size();
+    w[u].resize(s, 0);
 
-    for (int j = 0; j < k; ++j)
-    {
-      if (dag[u][j] == 1)
-        childs.push_back(j);
+    // u -> i
+    int u_size = dag[u].size();
+    for (int i = 0; i < u_size; ++i) {
+      if (parents[i] == 1 && dag[u][i] == 1)
+        childs.push_back(i);
     }
+//    std::cout << "u: " << u << " size: " << k << "\n";
+    // childs = C_i
 
-    if (childs.empty())
-      std::find(childs.begin(), childs.end(), 1);
-    // w[u][j] <- W_{u}(v)
-    else
-    {
-      k = childs.size();
-      // c_i = childs[i]
-      // 각 v(=j) 마다
-      int min = INT_MAX;
-      for (int v = 0; v < n; ++v)
-      {
-        int temp;
-        for (int i = 0; i < k; ++i)
-        {
-          temp = 0;
-          int csSize = cs.GetCandidateSize(childs[i]);
+    if (childs.empty()) {
+      std::fill(w[u].begin(), w[u].end(), 1);
+    } else {
+      // v in C(u)
+      int v_idx = cs.GetCandidateSize(u);
 
-          // W_{u, c_i} (v) 계산
-          for (int vn = 0; vn < csSize; ++vn)
-          {
-            if (data.IsNeighbor(cs.GetCandidate(childs[i], vn), cs.GetCandidate(u, v)))
-            {
-              temp += w[childs[i]][cs.GetCandidate(childs[i], vn)];
+      // W[u][v] 계산
+      for (int j = 0; j < v_idx; ++j) {
+        Vertex v = cs.GetCandidate(u, j);
+
+        int min = INT_MAX;
+        for (Vertex c_i: childs) {
+          int temp_weight = 0;
+          int vp_idx = cs.GetCandidateSize(c_i);
+
+          for (int k = 0; k < vp_idx; ++k) {
+            Vertex vprime = cs.GetCandidate(c_i, k);
+//            std::cout << "W[" << c_i << "]" << "[" << vprime << "]" << " = " << w[c_i][k] << "\n";
+            if (data.IsNeighbor(vprime, v)) {
+              temp_weight += w[c_i][k];
             }
           }
-          if (min > temp)
-            min = temp;
+
+          // temp_weight = W_{u, c_i}(v)
+          if (min > temp_weight) {
+            min = temp_weight;
+          }
         }
-        w[u][v] = min;
+        w[u][j] = min;
       }
     }
 
   }
+  weight.resize(size, 0);
+
+  for (int i = 0; i < size; ++i) {
+    for (int j : w[i]) {
+      weight[i] += j;
+    }
+  }
+
+}
+
+void DAG::PrintWeight() {
+//  for (int i = 0; i < size; ++i)
+//  {
+//    int k = w[i].size();
+//    for (int j = 0; j < k; ++j) {
+//      std::cout << "u: " << i << ", v: " << j << " weight: " << w[i][j] << "\n";
+//    }
+//  }
+  for (int i = 0; i < size; ++i) {
+    std::cout << "u" << i << ": " << weight[i] << "\n";
+  }
+}
+
+Vertex DAG::next(std::vector<Vertex> &acc)
+{
 
 }
