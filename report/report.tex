@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage{kotex, amsmath, amssymb, amsthm}
+\usepackage{biblatex}
+\author{2019-15861 염준영, 황희담}
+
+\addbibresource{bib.bib}
+\AtEveryCitekey{%
+  \ifkeyword{kobib}{%
+    \renewcommand{\multinamedelim}{, }%
+    \renewcommand{\finalnamedelim}{, }%
+  }{%
+  }%
+}
+\AtEveryBibitem{%
+  \ifkeyword{kobib}{%
+    \renewcommand{\multinamedelim}{·}%
+    \renewcommand{\finalnamedelim}{·}%
+    \DeclareFieldFormat{journaltitle}{<<#1>>}%
+  }{%
+  }%
+}
+
+\title{Graph Pattern Matching Challenge}
+
+
+\begin{document}
+\maketitle
+\section{알고리즘}
+\subsection{Matching Order}
+참고\cite{한명지2018AEAf}
+\subsection{Backtracking}
+\section{실행 환경}
+    
+\printbibliography
+\end{document}
