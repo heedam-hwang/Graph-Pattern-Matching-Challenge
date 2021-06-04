@@ -18,30 +18,40 @@ int Backtrack::count_error;
 
 void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
                                 const CandidateSet &cs) {
-  Backtrack::count = Backtrack::count_error = 0;
   int num = query.GetNumVertices();
   std::vector<int> ans(num, -1);
   std::cout << "t " << num << "\n";
-  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
-  DAG dag(query, data);
-  dag.InitWeight(cs, data);
-  std::vector<Vertex> _a;
-  std::vector<std::vector<Vertex>> __a(num, _a);
-  AdaptiveMatching(data, query, cs, 0, num, ans, dag);
-//  CheckWithDP(data, query, cs, 0, num, ans, __a);
-  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-  std::chrono::duration<double> time = end - start;
-  std::cout << "Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
 
 
   Backtrack::count = Backtrack::count_error = 0;
-  start = std::chrono::system_clock::now();
-  NaiveCheck(data, query, cs, 0, num , ans);
-  end = std::chrono::system_clock::now();
-  time = end - start;
-  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+  DAG dag(query, data);
+  dag.InitWeight(cs, data);
+  AdaptiveMatching(data, query, cs, 0, num, ans, dag);
+  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+  std::chrono::duration<double> time = end - start;
+  std::cout << "Adaptive Matching Elapsed Time: " << time.count() << "s\n";
+  std::cout << "Adaptive Matching Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+
+
+//  Backtrack::count = Backtrack::count_error = 0;
+//  start = std::chrono::system_clock::now();
+//  NaiveCheck(data, query, cs, 0, num , ans);
+//  end = std::chrono::system_clock::now();
+//  time = end - start;
+//  std::cout << "Naive Check Elapsed Time: " << time.count() << "s\n";
+//  std::cout << "Naive Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+//
+//  Backtrack::count = Backtrack::count_error = 0;
+//  start = std::chrono::system_clock::now();
+//  std::vector<Vertex> _a;
+//  std::vector<std::vector<Vertex>> __a(num, _a);
+//  CheckWithDP(data, query, cs, 0, num, ans, __a);
+//  end = std::chrono::system_clock::now();
+//  time = end -start;
+//  std::cout << "DP Check Elapsed Time: " << time.count() << "s\n";
+//  std::cout << "DP Check Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+
 }
 
 void Backtrack::PrintCandidates(std::vector<int> &ans) {
@@ -71,8 +81,10 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
     {
       int ithCandidate = cs.GetCandidate(root, _i);
       acc[root] = ithCandidate;
-      AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
+      bool isEnd = AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
       acc[root] = -1;
+      if (isEnd)
+        return true;
     }
   }
   else {
@@ -86,12 +98,6 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
       if (std::find(acc.begin(), acc.end(), v) != acc.end()) {
         continue;
       }
-
-      if (v == -1)
-      {
-        std::cout << "ERROR\n";
-      }
-
       acc[nextV] = v;
       bool isEnd = AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
       acc[nextV] = -1;
@@ -150,7 +156,7 @@ bool Backtrack::NaiveCheck(const Graph &data, const Graph &query, const Candidat
     if (!checkAnswer(acc, data, query)) {
       Backtrack::count_error++;
     }
-    if (count == 100000)
+    if (count == MAX_SIZE)
       return true;
 
     return false;
@@ -259,7 +265,7 @@ bool Backtrack::CheckWithDP(const Graph &data, const Graph &query, const Candida
     if (!checkAnswer(acc, data, query)) {
       Backtrack::count_error++;
     }
-    if (count == 100000)
+    if (count == MAX_SIZE)
       return true;
     return false;
   } else {
