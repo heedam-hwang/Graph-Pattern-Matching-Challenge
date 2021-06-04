@@ -29,7 +29,7 @@ public:
 
     void InitWeight(const CandidateSet &cs, const Graph &data);
 
-    Vertex nextV(std::vector<Vertex> &acc) const;
+    Vertex nextV(std::vector<Vertex> &acc, const Graph& data, const CandidateSet& cs) const;
 
     std::vector<Vertex> extendable(const std::vector<Vertex> &acc, Vertex u, const CandidateSet &cs, const Graph &data) const;
 

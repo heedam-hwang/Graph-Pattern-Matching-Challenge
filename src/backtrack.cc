@@ -88,7 +88,7 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
     }
   }
   else {
-    int nextV = dag.nextV(acc);
+    int nextV = dag.nextV(acc, data, cs);
     if (nextV == -1) {
       return false;
     }

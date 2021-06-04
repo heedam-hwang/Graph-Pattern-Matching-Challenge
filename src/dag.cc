@@ -164,13 +164,13 @@ void DAG::InitWeight(const CandidateSet &cs, const Graph &data) {
     }
 
   }
-  weight.resize(size, 0);
-
-  for (int i = 0; i < size; ++i) {
-    for (int j : w[i]) {
-      weight[i] += j;
-    }
-  }
+//  weight.resize(size, 0);
+//
+//  for (int i = 0; i < size; ++i) {
+//    for (int j : w[i]) {
+//      weight[i] += j;
+//    }
+//  }
 
 }
 
@@ -187,7 +187,7 @@ void DAG::PrintWeight() {
   }
 }
 
-Vertex DAG::nextV(std::vector<Vertex> &acc) const {
+Vertex DAG::nextV(std::vector<Vertex> &acc, const Graph& data, const CandidateSet& cs) const {
   // acc: matched list
   int min = INT_MAX;
   Vertex minIdx = -1;
@@ -201,21 +201,21 @@ Vertex DAG::nextV(std::vector<Vertex> &acc) const {
         break;
       }
     }
-/*
-    for (int j = 0; j < size; ++j) {
-      if (dag[i][j] == -1) {
-        if (std::find(acc.begin(), acc.end(), j) == acc.end()) {
-          allmatched = false;
-          break;
-        }
-      }
-    }
-*/
     if (allmatched)
-      if (min > weight[i]) {
-        min = weight[i];
+    {
+      int tempweight = 0;
+      std::vector<Vertex> C_M_u = extendable(acc, i, cs, data);
+
+      for (Vertex v: C_M_u)
+      {
+        tempweight += w[i][v];
+      }
+
+      if (min > tempweight) {
+        min = tempweight;
         minIdx = i;
       }
+    }
   }
   return minIdx;
 }
