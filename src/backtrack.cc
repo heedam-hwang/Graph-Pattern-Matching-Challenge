@@ -75,32 +75,57 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
       return false;
     }
     std::vector<Vertex> extendable = dag.extendable(acc, nextV, cs, data);
-    std::sort(extendable.begin(), extendable.end(),
-              [&](Vertex a, Vertex b) -> bool {
-                  int n = query.GetNumLabels();
+    if (index * 2 <= size) {
+      std::cout << "CASE 1: stage " << index << "\n";
+      std::sort(extendable.begin(), extendable.end(),
+                [&](Vertex a, Vertex b) -> bool {
+                    int n = query.GetNumLabels();
 //                  int max = query.GetNeighborLabelFrequency(nextV, 0);
 //                  int maxIdx = 0;
-                  float diffA = 0.0;
-                  float diffB = 0.0;
-                  for (int i = 0; i < n; ++i) {
-                    float temp  = (float)query.GetNeighborLabelFrequency(nextV, i) / (query.GetDegree(nextV));
-                    float tempA = (float)(data.GetNeighborLabelFrequency(a, i)) / (data.GetDegree(a));
-                    float tempB = (float)(data.GetNeighborLabelFrequency(b, i)) / (data.GetDegree(b));
+                    float diffA = 0.0;
+                    float diffB = 0.0;
+                    for (int i = 0; i < n; ++i) {
+                      float temp = (float) query.GetNeighborLabelFrequency(nextV, i) / (query.GetDegree(nextV));
+                      float tempA = (float) (data.GetNeighborLabelFrequency(a, i)) / (data.GetDegree(a));
+                      float tempB = (float) (data.GetNeighborLabelFrequency(b, i)) / (data.GetDegree(b));
 
-                    diffA += (temp - tempA) * (temp - tempA);
-                    diffB += (temp - tempB) * (temp - tempB);
+                      diffA += (temp - tempA) * (temp - tempA);
+                      diffB += (temp - tempB) * (temp - tempB);
 
 //                    if (temp > max) {
 //                      maxIdx = i;
 //                      max = temp;
 //                    }
-                  }
+                    }
 
-                  return diffA < diffB;
-              }
-    );
+                    return diffA < diffB;
+                }
+      );
+    } else {
+
+      std::cout << "CASE 2: stage " << index << "\n";
+      std::sort(extendable.begin(), extendable.end(),
+                [&](Vertex a, Vertex b) -> bool {
+                    int n = query.GetNumLabels();
+                    int max = query.GetNeighborLabelFrequency(nextV, 0);
+                    int maxIdx = 0;
+                    for (int i = 0; i < n; ++i) {
+                      int temp = query.GetNeighborLabelFrequency(nextV, i);
+
+                      if (temp > max) {
+                        maxIdx = i;
+                        max = temp;
+                      }
+                    }
+                    int tempA = data.GetNeighborLabelFrequency(a, maxIdx);
+                    int tempB = data.GetNeighborLabelFrequency(b, maxIdx);
+                    return tempA > tempB;
+                }
+      );
+    }
     for (Vertex v: extendable) {
       if (std::find(acc.begin(), acc.end(), v) != acc.end()) {
+//        std::cout << "MATCH FAILED: stage " << index << "\n";
         continue;
       }
       acc[nextV] = v;
@@ -135,10 +160,8 @@ bool Backtrack::checkAnswer(std::vector<int> &acc, const Graph &data, const Grap
     }
   }
 
-  for (int i = 0; i < acc.size(); ++i)
-  {
-    for (int j = i + 1; j < acc.size(); ++j)
-    {
+  for (int i = 0; i < acc.size(); ++i) {
+    for (int j = i + 1; j < acc.size(); ++j) {
       // 같은 Vertex가 두번 골라졌는지 Check
       if (acc[i] == acc[j])
         return false;
