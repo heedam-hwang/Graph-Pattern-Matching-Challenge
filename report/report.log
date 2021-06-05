@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.24)  4 JUN 2021 23:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.24)  6 JUN 2021 00:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -406,26 +406,26 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 ) (c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 27.
-LaTeX Font Info:    Trying to load font information for LUC+nanummj on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 28.
+LaTeX Font Info:    Trying to load font information for LUC+nanummj on input line 28.
  (c:/texlive/2020/texmf-dist/tex/latex/nanumtype1/lucnanummj.fd
 File: lucnanummj.fd 2013/02/12 v0.1 Nanum Myeongjo font definitions
 )
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    ... okay on input line 28.
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
  (c:/texlive/2020/texmf-dist/tex/latex/biblatex/lbx/english.lbx
@@ -452,35 +452,30 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'report.bbl' found.
  (c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.bbl)
-Package biblatex Info: Reference section=0 on input line 27.
-Package biblatex Info: Reference segment=0 on input line 27.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
+Package biblatex Info: Reference section=0 on input line 28.
+Package biblatex Info: Reference segment=0 on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
  (c:/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
  (c:/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (1.71622pt too wide) in paragraph at lines 38--38
-\OT1/cmr/m/n/10 chin-ery, 2019, pp. 1429{1446. \OT1/cmr/m/sc/10 isbn\OT1/cmr/m/n/10 : 9781450356435. \OT1/cmr/m/sc/10 doi\OT1/cmr/m/n/10 : $\OT1/cmtt/m/n/10 10 . 1145 / 3299869 .
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
+
  []
 
-[1
+LaTeX Font Info:    Trying to load font information for LUC+nanumgt on input line 53.
+(c:/texlive/2020/texmf-dist/tex/latex/nanumtype1/lucnanumgt.fd
+File: lucnanumgt.fd 2013/02/12 v0.1 Nanum Gothic font definitions
+) [1
 
-{c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux
-c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux:14: Missing \endcsname inserted.
+{c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux
+c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux:11: Missing \endcsname inserted.
 <to be read again> 
                    \unih@ngulpoint 
-l.14 ...현준2020FGQP}{nty/global//global/global}
-                                                  
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.aux:15: Missing \endcsname inserted.
-<to be read again> 
-                   \unih@ngulpoint 
-l.15 ...명지2018AEAf}{nty/global//global/global}
+l.11 ...명지2018AEAf}{nty/global//global/global}
                                                   
 The control sequence marked <to be read again> should
 not appear between \csname and \endcsname.
@@ -497,18 +492,18 @@ Package logreq Info: Writing requests to 'report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 9805 strings out of 479304
- 178997 string characters out of 5871219
- 877390 words of memory out of 5000000
- 26884 multiletter control sequences out of 15000+600000
- 417597 words of font info for 80 fonts, out of 8000000 for 9000
+ 9861 strings out of 479304
+ 179374 string characters out of 5871219
+ 878309 words of memory out of 5000000
+ 26912 multiletter control sequences out of 15000+600000
+ 425702 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,7n,74p,2870b,1313s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbd5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbd6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmac.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmae.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmba.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmcc.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd7.pfb>
-Output written on c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.pdf (1 page, 741301 bytes).
+ 68i,7n,74p,1200b,1313s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanumgtmb9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanumgtmba.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanumgtmc4.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbd5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjbd6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmac.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmad.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmae.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb1.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb3.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb4.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmba.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbb.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbc.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbd.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbe.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc0.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc1.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc2.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmcc.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmcd.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmce.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmcf.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd0.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd3.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd5.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd7.pfb>
+Output written on c:/Users/zoon0/Documents/GitHub/Graph-Pattern-Matching-Challenge/report/report.pdf (2 pages, 1996674 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 240 PDF objects out of 1000 (max. 8388607)
+ 177 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,6 @@
 \documentclass{article}
 
+% \everymath{\displaystyle}
 \usepackage{kotex, amsmath, amssymb, amsthm}
 \usepackage{biblatex}
 \author{2019-15861 염준영, 황희담}
@@ -20,7 +21,7 @@
   }{%
   }%
 }
-
+\linespread{1.6}
 \title{Graph Pattern Matching Challenge}
 
 
@@ -28,9 +29,37 @@
 \maketitle
 \section{알고리즘}
 \subsection{Matching Order}
-참고\cite{한명지2018AEAf}
-\cite{10.1145/3299869.3319880}
-\cite{김현준2020FGQP}
+% \cite{한명지2018AEAf}
+% \cite{10.1145/3299869.3319880}
+% \cite{김현준2020FGQP}
+
+기본적으로 \cite{한명지2018AEAf}, p25-27에 있는(report 폴더의 논문3.pdf) Weight array 방법을 사용하여 Vertex의 순서를 정하였다.
+다만 매번 \(\sum_{v \in C_{M}(u)} W_{u}(v)\)를 계산하는 것보다, 그냥 \(\sum_{v \in C(u)} W_{u}(v)\) 를 계산해 놓고
+그 weight대로 매칭하는 것이 실제 성능이 더 잘 나와서 \(\sum_{v \in C(u)} W_{u}(v)\)를 사용하였다.\\
+\begin{verbatim}
+    if (allmatched)
+    {
+      int tempweight = 0;
+//      std::vector<Vertex> C_M_u = extendable(acc, i, cs, data);
+
+//      for (Vertex v: C_M_u)
+//      {
+//        tempweight += w[i][v];
+//      }
+      // C_M_u.size() 를 쓰면 Candidate Size order
+      // tempweight = C_M_u.size();
+      tempweight = weight[i];
+    }
+\end{verbatim}
+(해당 코드에서, for 루프 부분은 \(\sum_{v \in C_{M}(u)} W_{u}(v)\), \verb|weight[i]|는 \(\sum_{v \in C(u)} W_{u}(v)\), \verb|C_M_u.size()| 는 \(\left| C_{M}(u) \right|\) )\\
+또한, \(u\)를 정한 후, \(v \in C_{M}(u)\)에 대하여 \(M' \leftarrow M \cup \{(u, v)\}\)를 추가한 후
+매칭할 때, \(v\)를 선택하는 순서를 \(u\)의 이웃이 가진 라벨 중 가장 빈도가 높은 라벨을 \(l\)이라 할 때,
+\(v\)의 이웃이 가진 \(l\)의 수를 기준으로 하여 내림차순으로 매칭하게 하여, 
+더 가능성이 높은 구조를 찾아 더 빠르게 매칭되도록 하였다.(이부분 다양한 실험 중)\\
+(\(\left| C_{M}(u) \right|\)를 사용하면 Candidate Size order, 
+\(\sum_{v \in C_{M}(u)} W_{u}(v)\)를 사용하면 Path size order)
+
+
 \subsection{Backtracking}
 \section{실행 환경}
     
