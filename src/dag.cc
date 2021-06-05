@@ -164,13 +164,13 @@ void DAG::InitWeight(const CandidateSet &cs, const Graph &data) {
     }
 
   }
-//  weight.resize(size, 0);
-//
-//  for (int i = 0; i < size; ++i) {
-//    for (int j : w[i]) {
-//      weight[i] += j;
-//    }
-//  }
+  weight.resize(size, 0);
+
+  for (int i = 0; i < size; ++i) {
+    for (int j : w[i]) {
+      weight[i] += j;
+    }
+  }
 
 }
 
@@ -204,12 +204,16 @@ Vertex DAG::nextV(std::vector<Vertex> &acc, const Graph& data, const CandidateSe
     if (allmatched)
     {
       int tempweight = 0;
-      std::vector<Vertex> C_M_u = extendable(acc, i, cs, data);
+//      std::vector<Vertex> C_M_u = extendable(acc, i, cs, data);
 
-      for (Vertex v: C_M_u)
-      {
-        tempweight += w[i][v];
-      }
+//      for (Vertex v: C_M_u)
+//      {
+//        tempweight += w[i][v];
+//      }
+      // C_M_u.size() 를 쓰면 Candidate Size order
+//       tempweight -=  C_M_u.size();
+//       tempweight *= tempweight;
+      tempweight += weight[i];
 
       if (min > tempweight) {
         min = tempweight;

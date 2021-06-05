@@ -8,6 +8,8 @@
 #include <chrono>
 
 #define MAX_SIZE 100000
+template<typename T>
+using riter = typename std::vector<T>::reverse_iterator;
 
 Backtrack::Backtrack() {}
 
@@ -31,7 +33,8 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
   std::chrono::duration<double> time = end - start;
   std::cout << "Adaptive Matching Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Adaptive Matching Correct Rate: " << Backtrack::count - Backtrack::count_error << "/" << Backtrack::count << "\n";
+  std::cout << "Adaptive Matching Correct Rate: " << Backtrack::count - Backtrack::count_error << "/"
+            << Backtrack::count << "\n";
 
 
 //  Backtrack::count = Backtrack::count_error = 0;
@@ -77,8 +80,7 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
   } else if (index == 0) {
     int root = dag.getRoot();
     int csNum = cs.GetCandidateSize(root);
-    for (int _i = 0; _i < csNum; ++_i)
-    {
+    for (int _i = 0; _i < csNum; ++_i) {
       int ithCandidate = cs.GetCandidate(root, _i);
       acc[root] = ithCandidate;
       bool isEnd = AdaptiveMatching(data, query, cs, index + 1, size, acc, dag);
@@ -86,16 +88,33 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
       if (isEnd)
         return true;
     }
-  }
-  else {
+  } else {
     int nextV = dag.nextV(acc, data, cs);
     if (nextV == -1) {
       return false;
     }
     std::vector<Vertex> extendable = dag.extendable(acc, nextV, cs, data);
-    for (Vertex v: extendable)
-    {
+    std::sort(extendable.begin(), extendable.end(),
+              [&](Vertex a, Vertex b) -> bool {
+                  int n = query.GetNumLabels();
+                  int max = query.GetNeighborLabelFrequency(nextV, 0);
+                  int maxIdx = 0;
+                  for (int i = 0; i < n; ++i) {
+                    int temp = query.GetNeighborLabelFrequency(nextV, i);
+                    if (temp > max) {
+                      maxIdx = i;
+                      max = temp;
+                    }
+                  }
+
+                  int tempA = data.GetNeighborLabelFrequency(a, maxIdx);
+                  int tempB = data.GetNeighborLabelFrequency(b, maxIdx);
+                  return tempA > tempB;
+              }
+    );
+    for (Vertex v: extendable) {
       if (std::find(acc.begin(), acc.end(), v) != acc.end()) {
+        std::cout << "MATCH FAILED: stage " << index << "\n";
         continue;
       }
       acc[nextV] = v;
