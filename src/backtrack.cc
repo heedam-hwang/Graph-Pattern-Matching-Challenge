@@ -78,19 +78,25 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
     std::sort(extendable.begin(), extendable.end(),
               [&](Vertex a, Vertex b) -> bool {
                   int n = query.GetNumLabels();
-                  int max = query.GetNeighborLabelFrequency(nextV, 0);
-                  int maxIdx = 0;
+//                  int max = query.GetNeighborLabelFrequency(nextV, 0);
+//                  int maxIdx = 0;
+                  float diffA = 0.0;
+                  float diffB = 0.0;
                   for (int i = 0; i < n; ++i) {
-                    int temp = query.GetNeighborLabelFrequency(nextV, i);
-                    if (temp > max) {
-                      maxIdx = i;
-                      max = temp;
-                    }
+                    float temp  = (float)query.GetNeighborLabelFrequency(nextV, i) / (query.GetDegree(nextV));
+                    float tempA = (float)(data.GetNeighborLabelFrequency(a, i)) / (data.GetDegree(a));
+                    float tempB = (float)(data.GetNeighborLabelFrequency(b, i)) / (data.GetDegree(b));
+
+                    diffA += (temp - tempA) * (temp - tempA);
+                    diffB += (temp - tempB) * (temp - tempB);
+
+//                    if (temp > max) {
+//                      maxIdx = i;
+//                      max = temp;
+//                    }
                   }
 
-                  int tempA = data.GetNeighborLabelFrequency(a, maxIdx);
-                  int tempB = data.GetNeighborLabelFrequency(b, maxIdx);
-                  return tempA > tempB;
+                  return diffA < diffB;
               }
     );
     for (Vertex v: extendable) {
