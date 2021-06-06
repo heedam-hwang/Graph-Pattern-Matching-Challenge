@@ -75,16 +75,7 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
       return false;
     }
     std::vector<Vertex> extendable = dag.extendable(acc, nextV, cs, data);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-    if (index * 2 > size) {
-=======
     if (index * 3 > 2 * size) {
->>>>>>> Stashed changes
-=======
-    if (index * 3 > 2 * size) {
->>>>>>> Stashed changes
 //      std::cout << "CASE 2: stage " << index << "\n";
       std::sort(extendable.begin(), extendable.end(),
                 [&](Vertex a, Vertex b) -> bool {
@@ -132,7 +123,6 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
                 }
       );
     }
-=======
     std::sort(extendable.begin(), extendable.end(),
               [&](Vertex a, Vertex b) -> bool {
                   int n = query.GetNumLabels();
@@ -151,7 +141,6 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
                   return tempA > tempB;
               }
     );
->>>>>>> parent of 9022c18 (yeast s3 이 안되고 n8이 되는 버전)
     for (Vertex v: extendable) {
       if (std::find(acc.begin(), acc.end(), v) != acc.end()) {
 //        std::cout << "MATCH FAILED: stage " << index << "\n";
