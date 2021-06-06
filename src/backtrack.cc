@@ -76,8 +76,12 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
     }
     std::vector<Vertex> extendable = dag.extendable(acc, nextV, cs, data);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     if (index * 2 > size) {
+=======
+    if (index * 3 > 2 * size) {
+>>>>>>> Stashed changes
 =======
     if (index * 3 > 2 * size) {
 >>>>>>> Stashed changes
