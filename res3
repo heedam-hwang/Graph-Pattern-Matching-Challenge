@@ -1,0 +1,76 @@
+Adaptive Matching Elapsed Time: 0.001809s
+Adaptive Matching Correct Rate: 96/96
+./query/lcc_hprd_n1.igraph
+
+Adaptive Matching Elapsed Time: 2.99527s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_hprd_n3.igraph
+
+Adaptive Matching Elapsed Time: 1.83231s
+Adaptive Matching Correct Rate: 32832/32832
+./query/lcc_hprd_n5.igraph
+
+Adaptive Matching Elapsed Time: 9.05414s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_hprd_n8.igraph
+
+Adaptive Matching Elapsed Time: 0.005963s
+Adaptive Matching Correct Rate: 504/504
+./query/lcc_hprd_s1.igraph
+
+Adaptive Matching Elapsed Time: 2.99731s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_hprd_s3.igraph
+
+Adaptive Matching Elapsed Time: 5.46555s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_hprd_s5.igraph
+
+Adaptive Matching Elapsed Time: 8.5998s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_hprd_s8.igraph
+
+Adaptive Matching Elapsed Time: 0.216998s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_n1.igraph
+
+Adaptive Matching Elapsed Time: 0.538539s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_n3.igraph
+
+Adaptive Matching Elapsed Time: 0.611659s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_n5.igraph
+
+Adaptive Matching Elapsed Time: 0.216782s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_s1.igraph
+
+Adaptive Matching Elapsed Time: 0.407145s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_s3.igraph
+
+Adaptive Matching Elapsed Time: 0.568572s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_human_s5.igraph
+
+Adaptive Matching Elapsed Time: 1.09377s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_yeast_n1.igraph
+
+Adaptive Matching Elapsed Time: 3.57531s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_yeast_n3.igraph
+
+Adaptive Matching Elapsed Time: 6.51251s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_yeast_n5.igraph
+
+Adaptive Matching Elapsed Time: 1.09003s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_yeast_s1.igraph
+
+Adaptive Matching Elapsed Time: 27.113s
+Adaptive Matching Correct Rate: 100000/100000
+./query/lcc_yeast_s3.igraph
+
