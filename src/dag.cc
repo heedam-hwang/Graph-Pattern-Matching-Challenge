@@ -128,7 +128,6 @@ void DAG::InitWeight(const CandidateSet &cs, const Graph &data) {
       if (parents[i] == 1 && dag[u][i] == 1)
         childs.push_back(i);
     }
-//    std::cout << "u: " << u << " size: " << k << "\n";
     // childs = C_i
 
     if (childs.empty()) {
@@ -148,7 +147,6 @@ void DAG::InitWeight(const CandidateSet &cs, const Graph &data) {
 
           for (int k = 0; k < vp_idx; ++k) {
             Vertex vprime = cs.GetCandidate(c_i, k);
-//            std::cout << "W[" << c_i << "]" << "[" << vprime << "]" << " = " << w[c_i][k] << "\n";
             if (data.IsNeighbor(vprime, v)) {
               temp_weight += w[c_i][k];
             }

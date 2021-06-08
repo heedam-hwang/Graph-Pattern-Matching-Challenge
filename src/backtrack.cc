@@ -25,16 +25,16 @@ void Backtrack::PrintAllMatches(const Graph &data, const Graph &query,
   std::cout << "t " << num << "\n";
 
 
-  Backtrack::count = Backtrack::count_error = 0;
-  std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+  Backtrack::count = 0;
+  // std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
   DAG dag(query, data);
   dag.InitWeight(cs, data);
   AdaptiveMatching(data, query, cs, 0, num, ans, dag);
-  std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
-  std::chrono::duration<double> time = end - start;
-  std::cout << "Adaptive Matching Elapsed Time: " << time.count() << "s\n";
-  std::cout << "Adaptive Matching Correct Rate: " << Backtrack::count - Backtrack::count_error << "/"
-            << Backtrack::count << "\n";
+  // std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+  // std::chrono::duration<double> time = end - start;
+  // std::cout << "Adaptive Matching Elapsed Time: " << time.count() << "s\n";
+  // std::cout << "Adaptive Matching Correct Rate: " << Backtrack::count - Backtrack::count_error << "/"
+  //           << Backtrack::count << "\n";
 
 }
 
@@ -51,9 +51,9 @@ bool Backtrack::AdaptiveMatching(const Graph &data, const Graph &query, const Ca
   if (index == size) {
     PrintCandidates(acc);
     Backtrack::count++;
-    if (!checkAnswer(acc, data, query)) {
-      Backtrack::count_error++;
-    }
+    // if (!checkAnswer(acc, data, query)) {
+    //   Backtrack::count_error++;
+    // }
     if (count == MAX_SIZE)
       return true;
 
