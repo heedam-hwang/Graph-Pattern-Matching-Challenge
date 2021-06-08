@@ -1,4 +1,7 @@
 # Graph Pattern Matching Challenge
+
+## 레포트는 report폴더의 report.pdf 파일입니다
+
 ***You may use basic pruning techniques, but since the challenge aims to find a good matching order, you are not expected to use complicated pruning techniques (like Failing Set of DAF).***
 ## Compile and Execute 
 ### main program
